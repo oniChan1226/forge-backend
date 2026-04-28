@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id           String      @id @default(cuid())
+  email        String      @unique
+  username     String      @unique
+  passwordHash String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  challenges   Challenge[]
+}
+
+model Challenge {
+  id             String          @id @default(cuid())
+  userId         String
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title          String
+  description    String?
+  durationDays   Int
+  dailyTarget    String
+  startDate      DateTime
+  endDate        DateTime
+  completionMode CompletionMode  @default(FLEXIBLE)
+  allowedMisses  Int             @default(3)
+  status         ChallengeStatus @default(ACTIVE)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  dailyProgress  DailyProgress[]
+}
+
+model DailyProgress {
+  id          String    @id @default(cuid())
+  challengeId String
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  date        DateTime
+  completed   Boolean   @default(false)
+  notes       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([challengeId, date])
+}
+
+enum CompletionMode {
+  STRICT
+  FLEXIBLE
+}
+
+enum ChallengeStatus {
+  ACTIVE
+  COMPLETED
+  FAILED
+  ABANDONED
+}
