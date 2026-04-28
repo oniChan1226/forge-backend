@@ -1,6 +1,6 @@
-<<<<<<< HEAD
+
 # forge-backend
-=======
+
 # MERN Backend Boilerplate (TypeScript)
 
 Production-oriented Express + MongoDB backend starter designed for high-scale services.
@@ -43,4 +43,4 @@ Production-oriented Express + MongoDB backend starter designed for high-scale se
 ## Notes on Scale
 
 Connection pool defaults target long-running API services and should be refined using production metrics.
->>>>>>> df58ffb (feat: base)
+
