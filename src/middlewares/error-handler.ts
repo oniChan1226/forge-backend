@@ -1,19 +1,18 @@
 import { NextFunction, Request, Response } from "express";
-
 import { env } from "../config/env";
 import { logger } from "../config/logger";
-import { AppError } from "../utils/app-error";
+import { ApiError } from "../utils/api-error";
 
 export const errorHandler = (
   error: Error,
   _req: Request,
   res: Response,
-  _next: NextFunction,
+  _next: NextFunction
 ): void => {
-  const isAppError = error instanceof AppError;
-  const statusCode = isAppError ? error.statusCode : 500;
+  const isApiError = error instanceof ApiError;
+  const statusCode = isApiError ? error.statusCode : 500;
 
-  if (!isAppError || statusCode >= 500) {
+  if (!isApiError || statusCode >= 500) {
     logger.error({ err: error }, "Unhandled application error");
   }
 
