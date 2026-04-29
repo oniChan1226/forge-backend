@@ -3,22 +3,44 @@ import { env } from "../config/env";
 import { logger } from "../config/logger";
 import { ApiError } from "../utils/api-error";
 
+const isObject = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null;
+
 export const errorHandler = (
-  error: Error,
+  error: unknown,
   _req: Request,
   res: Response,
-  _next: NextFunction
+  _next: NextFunction,
 ): void => {
-  const isApiError = error instanceof ApiError;
-  const statusCode = isApiError ? error.statusCode : 500;
+  let statusCode = 500;
+  let message = "Internal server error";
+  let details: unknown = null;
 
-  if (!isApiError || statusCode >= 500) {
+  if (error instanceof ApiError) {
+    statusCode = error.statusCode;
+    message = error.message;
+    details = error.details;
+
+    if (statusCode >= 500) {
+      logger.error({ err: error }, "Server error (ApiError)");
+    }
+  } else if (error instanceof Error) {
     logger.error({ err: error }, "Unhandled application error");
+
+    message = env.NODE_ENV === "production" ? "Internal server error" : error.message;
+  } else {
+    logger.error({ err: error }, "Non-Error thrown");
   }
 
   res.status(statusCode).json({
     success: false,
-    message: error.message,
-    ...(env.NODE_ENV !== "production" && { stack: error.stack }),
+    message,
+
+    ...(isObject(details) ? { errors: details } : {}),
+
+    ...(env.NODE_ENV !== "production" &&
+      error instanceof Error && {
+        stack: error.stack,
+      }),
   });
 };

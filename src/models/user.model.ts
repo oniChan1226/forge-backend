@@ -1,20 +1,6 @@
-import mongoose from "mongoose";
+import { Schema, model, InferSchemaType } from "mongoose";
 
-interface IUser {
-  _id: string | mongoose.Types.ObjectId;
-  name: string;
-  email: string;
-  password: string;
-  age?: number;
-  gender?: string;
-  avatar?: string;
-  role: string;
-  isVerified?: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export const userSchema = new mongoose.Schema<IUser>(
+const userSchema = new Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
@@ -23,8 +9,12 @@ export const userSchema = new mongoose.Schema<IUser>(
     gender: { type: String },
     avatar: { type: String },
     role: { type: String, default: "user" },
+    about: { type: String },
+    isVerified: { type: Boolean, default: false },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-export const User = mongoose.model("User", userSchema);
+export type User = InferSchemaType<typeof userSchema>;
+
+export const UserModel = model("User", userSchema);
