@@ -21,4 +21,4 @@ router.post(
   login
 );
 
-export default router;
+export { router as authRouter};
