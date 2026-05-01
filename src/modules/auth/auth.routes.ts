@@ -1,14 +1,16 @@
 import { Router } from "express";
-// Import controller methods
-import { AuthController } from "./auth.controller";
-import { asyncHandler } from "../../utils/async-handler";
-import { AuthService } from "./auth.service";
+import { validateRequest } from "../../utils/validate";
+import { signupSchema } from "./auth.validators";
+import { signup } from "./auth.controller";
 
 const router = Router();
 
-const authService = new AuthService();
-const authController = new AuthController(authService);
-
-router.post("/signup", asyncHandler(authController.signup));
+router.post(
+  "/signup",
+  validateRequest({
+    body: signupSchema,
+  }),
+  signup
+);
 
 export default router;

@@ -1,15 +1,18 @@
 import { AuthService } from "./auth.service";
 import { Request, Response } from "express";
+import { SignupDTO } from "./auth.validators";
+import { TypedRequestBody } from "../../ts-helpers";
+import { asyncHandler } from "../../utils/async-handler";
 
-export class AuthController {
-  // Implement controller methods here (e.g., login, register)
-  private authService: AuthService;
+const authService = new AuthService();
 
-  constructor(authService: AuthService) {
-    this.authService = authService;
-  }
+export const signup = asyncHandler(async (req, res) => {
+  const body = req.body as SignupDTO;
 
-  public signup = async (req: Request, res: Response) => {
-    const body = req.body;
-  };
-}
+  const user = await authService.signup(body);
+
+  res.status(201).json({
+    message: "User created successfully",
+    user,
+  });
+});

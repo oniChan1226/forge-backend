@@ -8,7 +8,7 @@ type RequestParts = {
   params?: ZodType;
 };
 
-export const validate =
+export const validateRequest =
   (schemas: RequestParts) => async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (schemas.body) {

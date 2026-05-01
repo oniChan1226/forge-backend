@@ -12,6 +12,7 @@ const loggerOptions: pino.LoggerOptions = {
             colorize: true,
             singleLine: true,
             translateTime: "SYS:standard",
+            ignore: "pid,hostname",
           },
         },
       }

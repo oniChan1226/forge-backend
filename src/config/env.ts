@@ -19,6 +19,12 @@ const envSchema = z.object({
   MONGODB_SERVER_SELECTION_TIMEOUT_MS: z.coerce.number().int().positive().default(5000),
   MONGODB_CONNECT_TIMEOUT_MS: z.coerce.number().int().positive().default(10000),
   MONGODB_SOCKET_TIMEOUT_MS: z.coerce.number().int().positive().default(30000),
+
+  // Tokens
+  ACCESS_TOKEN_SECRET: z.string().min(1),
+  REFRESH_TOKEN_SECRET: z.string().min(1),
+  ACCESS_TOKEN_EXPIRATION: z.union([z.number(), z.string()]).default("15m"),
+  REFRESH_TOKEN_EXPIRATION: z.union([z.number(), z.string()]).default("7d"),
 });
 
 const parsed = envSchema.safeParse(process.env);

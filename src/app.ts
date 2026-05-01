@@ -21,6 +21,11 @@ app.use(
   pinoHttp({
     logger,
     autoLogging: env.NODE_ENV !== "test",
+    quietReqLogger: env.NODE_ENV === "development",
+    quietResLogger: env.NODE_ENV === "development",
+    customSuccessMessage: (req, res, responseTime) => {
+      return `${req.method} ${req.url} ${res.statusCode} ${Math.round(responseTime)}ms`;
+    },
   }),
 );
 

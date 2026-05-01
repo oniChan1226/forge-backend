@@ -40,6 +40,23 @@ Production-oriented Express + MongoDB backend starter designed for high-scale se
 - GET /api/v1/health/live
 - GET /api/v1/health/ready
 
+## Dev Error Fixtures
+
+Available when `NODE_ENV !== production`:
+
+- GET /api/v1/dev/errors/bad-request
+- GET /api/v1/dev/errors/unauthorized
+- GET /api/v1/dev/errors/forbidden
+- GET /api/v1/dev/errors/not-found
+- GET /api/v1/dev/errors/conflict
+- GET /api/v1/dev/errors/unprocessable
+- GET /api/v1/dev/errors/runtime
+- POST /api/v1/dev/errors/validation/body
+- GET /api/v1/dev/errors/validation/query
+- GET /api/v1/dev/errors/validation/params/:ticketId
+
+The validation routes use the same Zod-based middleware path as the rest of the app, so you can trigger real 400 responses by sending invalid payloads.
+
 ## Notes on Scale
 
 Connection pool defaults target long-running API services and should be refined using production metrics.
