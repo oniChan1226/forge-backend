@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import { asyncHandler } from "../../utils/async-handler";
-import { validateRequest } from "../../utils/validate";
+import { asyncHandler } from "../../utils/middleware-utils/async-handler";
+import { validateRequest } from "../../utils/middleware-utils/validate";
 import {
   badRequestError,
   conflictError,

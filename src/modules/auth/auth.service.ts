@@ -1,7 +1,7 @@
 import { UserModel } from "../../models/user.model";
 import { BcryptService } from "../../services/hash.service";
 import { JwtService } from "../../services/token.service";
-import { ApiError } from "../../utils/api-error";
+import { ApiError } from "../../utils/errors/api-error";
 import { SignupDTO } from "./auth.validators";
 
 const HashService = new BcryptService();

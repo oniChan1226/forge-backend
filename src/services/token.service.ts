@@ -1,6 +1,6 @@
 import jwt, { SignOptions } from "jsonwebtoken";
 import { env } from "../config/env";
-import { ApiError } from "../utils/api-error";
+import { ApiError } from "../utils/errors/api-error";
 
 // token.service.ts
 export interface ITokenService {

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { ApiError } from "../../utils/api-error";
+import { ApiError } from "../../utils/errors/api-error";
 
 const throwApiError =
   (statusCode: number, message: string, details?: unknown) =>

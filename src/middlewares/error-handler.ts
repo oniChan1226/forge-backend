@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { env } from "../config/env";
 import { logger } from "../config/logger";
-import { ApiError } from "../utils/api-error";
+import { ApiError } from "../utils/errors/api-error";
 
 const isObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null;
