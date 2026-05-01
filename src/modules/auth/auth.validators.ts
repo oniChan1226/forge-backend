@@ -1,5 +1,6 @@
 import z from "zod";
 
+// Signup validation schema
 export const signupSchema = z.object({
   name: z.string().min(1, "Name is required").max(100, "Name must be at most 100 characters long"),
   email: z.string().email("Invalid email address"),
@@ -18,3 +19,12 @@ export const signupSchema = z.object({
 });
 
 export type SignupDTO = z.infer<typeof signupSchema>;
+
+
+// Login validation schema
+export const loginSchema = z.object({
+  email: z.email("Invalid email address"),
+  password: z.string().min(1, "Password is required"),
+});
+
+export type LoginDTO = z.infer<typeof loginSchema>;

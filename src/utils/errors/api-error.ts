@@ -9,7 +9,7 @@ export class ApiError extends Error {
     this.message = message;
     this.isOperational = isOperational;
     this.details = details;
-    this.name = "AppError";
+    this.name = "Api Error";
     Object.setPrototypeOf(this, ApiError.prototype);
   }
 }

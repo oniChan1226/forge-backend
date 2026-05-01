@@ -9,6 +9,8 @@ const envSchema = z.object({
   HOST: z.string().default("0.0.0.0"),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]).default("info"),
 
+  CORS_ORIGIN: z.string().default("*"),
+
   MONGODB_URI: z.string().min(1),
   MONGODB_DB_NAME: z.string().min(1),
 

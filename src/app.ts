@@ -5,6 +5,7 @@ import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 import hpp from "hpp";
 import pinoHttp from "pino-http";
+import cookieParser from "cookie-parser";
 
 import { env } from "./config/env";
 import { logger } from "./config/logger";
@@ -30,7 +31,11 @@ app.use(
 );
 
 app.use(helmet());
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+  credentials: true,
+  origin: env.CORS_ORIGIN,
+}));
 app.use(hpp());
 app.use(compression());
 app.use(express.json({ limit: "1mb" }));

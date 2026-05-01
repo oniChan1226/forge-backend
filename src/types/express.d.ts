@@ -1,10 +1,11 @@
-import "express";
-
-declare module "express" {
-  interface Request {
-    query: any;
-    body: any;
-    params: any;
-    user?: any;
+declare global {
+  namespace Express {
+    interface Request {
+      user?: {
+        _id: string;
+      };
+    }
   }
 }
+
+export {};
