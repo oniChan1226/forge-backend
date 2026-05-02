@@ -1,4 +1,9 @@
+import dns from "node:dns";
 import { createServer } from "node:http";
+
+// 🔥 FORCE stable DNS BEFORE anything else
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
+dns.setDefaultResultOrder("ipv4first");
 
 import { app } from "./app";
 import { connectToDatabase, disconnectFromDatabase } from "./config/database";

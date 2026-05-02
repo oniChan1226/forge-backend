@@ -1,15 +1,14 @@
 import compression from "compression";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { type Request, type Response } from "express";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 import hpp from "hpp";
-import pinoHttp from "pino-http";
-import cookieParser from "cookie-parser";
 
 import { env } from "./config/env";
-import { logger } from "./config/logger";
 import { errorHandler } from "./middlewares/error-handler";
+import { httpLogger } from "./middlewares/http-logger";
 import { notFoundHandler } from "./middlewares/not-found";
 import { apiRouter } from "./routes";
 
@@ -18,17 +17,7 @@ const app = express();
 app.set("trust proxy", 1);
 app.disable("x-powered-by");
 
-app.use(
-  pinoHttp({
-    logger,
-    autoLogging: env.NODE_ENV !== "test",
-    quietReqLogger: env.NODE_ENV === "development",
-    quietResLogger: env.NODE_ENV === "development",
-    customSuccessMessage: (req, res, responseTime) => {
-      return `${req.method} ${req.url} ${res.statusCode} ${Math.round(responseTime)}ms`;
-    },
-  }),
-);
+app.use(httpLogger);
 
 app.use(helmet());
 app.use(cookieParser());

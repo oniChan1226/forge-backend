@@ -1,12 +1,15 @@
-import { AuthService } from "./auth.service";
-import { LoginDTO, SignupDTO } from "./auth.validators";
-import { asyncHandler } from "../../utils/middleware-utils/async-handler";
+import type { CookieOptions } from "express";
+
+import { env } from "../../config/env";
 import { BcryptService } from "../../services/hash.service";
 import { JwtService } from "../../services/token.service";
-import { UserTokenService } from "../user-token/user-token.service";
 import { ApiResponse } from "../../utils/http/api-response";
-import { env } from "../../config/env";
-import type { CookieOptions } from "express";
+import { asyncHandler } from "../../utils/middleware-utils/async-handler";
+import { UserTokenService } from "../user-token/user-token.service";
+
+import { AuthService } from "./auth.service";
+import { LoginDTO, SignupDTO } from "./auth.validators";
+
 
 const authService = new AuthService(new BcryptService(), new JwtService(), new UserTokenService());
 

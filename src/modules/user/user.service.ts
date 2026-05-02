@@ -7,7 +7,7 @@ export class UserService {
     if (!user) {
       throw new ApiError(404, "User not found");
     }
-    const { password, ...sanitizedUser } = user;
+    const { password: _password, ...sanitizedUser } = user;
     return sanitizedUser;
   }
 }

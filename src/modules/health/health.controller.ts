@@ -1,6 +1,6 @@
+import { Request, Response } from "express";
 import mongoose from "mongoose";
 
-import { Request, Response } from "express";
 
 export const livenessCheck = (_req: Request, res: Response): void => {
   res.status(200).json({

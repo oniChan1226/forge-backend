@@ -1,15 +1,16 @@
-import { UserTokenModel } from "../../models";
 import crypto from "crypto";
 
-export interface UserTokenService {
+import { UserTokenModel } from "../../models";
+
+export interface IUserTokenService {
   isValidUserToken(token: string, userId: string): Promise<boolean>;
 
   revokeUserToken(token: string, userId: string): Promise<boolean>;
 
-  createUserToken(token: string, userId: string, expiresIn?: number): Promise<any>;
+  createUserToken(token: string, userId: string, expiresIn?: number): Promise<unknown>;
 }
 
-export class UserTokenService implements UserTokenService {
+export class UserTokenService implements IUserTokenService {
   constructor() {}
 
   private hashToken(token: string) {

@@ -1,5 +1,6 @@
 import { ApiResponse } from "../../utils/http/api-response";
 import { asyncHandler } from "../../utils/middleware-utils/async-handler";
+
 import { UserService } from "./user.service";
 
 const userService = new UserService();

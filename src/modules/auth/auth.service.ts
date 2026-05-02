@@ -4,6 +4,7 @@ import { JwtService } from "../../services/token.service";
 import { ApiError } from "../../utils/errors/api-error";
 import { withTransaction } from "../../utils/helpers/mongodb-transaction";
 import { UserTokenService } from "../user-token/user-token.service";
+
 import { LoginDTO, SignupDTO } from "./auth.validators";
 
 export class AuthService {
@@ -30,7 +31,7 @@ export class AuthService {
       });
 
       await user.save({ session });
-      const { password, ...sanitizedUser } = user.toObject();
+      const { password: _password, ...sanitizedUser } = user.toObject();
       return sanitizedUser;
     });
   }
@@ -49,7 +50,7 @@ export class AuthService {
     const token = this.tokenService.generateTokenPair(user._id.toString());
     await this.userTokenService.createUserToken(token.refreshToken, user._id.toString());
 
-    const { password, ...sanitizedUser } = user;
+    const { password: _password, ...sanitizedUser } = user;
 
     return { user: sanitizedUser, token };
   }

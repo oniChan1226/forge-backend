@@ -1,4 +1,5 @@
 import jwt, { SignOptions } from "jsonwebtoken";
+
 import { env } from "../config/env";
 import { ApiError } from "../utils/errors/api-error";
 

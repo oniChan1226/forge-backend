@@ -1,10 +1,11 @@
 import { Router } from "express";
 
 import { env } from "../config/env";
-import { healthRouter } from "./health.route";
 import { authRouter } from "../modules/auth/auth.routes";
-import { userRouter } from "../modules/user/user.routes";
 import devErrorsRouter from "../modules/dev-errors/dev-errors.routes";
+import { userRouter } from "../modules/user/user.routes";
+
+import { healthRouter } from "./health.route";
 
 const apiRouter = Router();
 
