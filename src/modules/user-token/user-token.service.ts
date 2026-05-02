@@ -8,6 +8,8 @@ export interface IUserTokenService {
   revokeUserToken(token: string, userId: string): Promise<boolean>;
 
   createUserToken(token: string, userId: string, expiresIn?: number): Promise<unknown>;
+
+  revokeAllUserTokens(userId: string): Promise<void>;
 }
 
 export class UserTokenService implements IUserTokenService {
@@ -51,5 +53,19 @@ export class UserTokenService implements IUserTokenService {
     });
 
     return userToken.save();
+  }
+
+  public async revokeAllUserTokens(userId: string): Promise<void> {
+    await UserTokenModel.updateMany(
+      {
+        userId,
+        isRevoked: false,
+        expiresAt: { $gt: new Date() },
+      },
+      {
+        isRevoked: true,
+        revokedAt: new Date(),
+      },
+    );
   }
 }

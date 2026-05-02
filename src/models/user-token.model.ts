@@ -13,6 +13,7 @@ export const userTokenSchema = new Schema(
 );
 
 userTokenSchema.index({ userId: 1, token: 1 }, { unique: true });
+userTokenSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 export type UserToken = InferSchemaType<typeof userTokenSchema>;
 

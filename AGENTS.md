@@ -27,12 +27,19 @@ Primary project docs:
 - Shared services: [src/services](src/services)
 - Shared utilities: [src/utils](src/utils)
 
+## Logging And Runtime Conventions
+- Use the shared Pino setup in [src/config/logger.ts](src/config/logger.ts) instead of creating ad hoc loggers.
+- Keep request logging quiet outside production; HTTP logging noise is intentionally suppressed in development.
+- When logging errors, include the error object and a short context message.
+
 ## Required Backend Patterns
 - Wrap async route handlers with [src/utils/middleware-utils/async-handler.ts](src/utils/middleware-utils/async-handler.ts).
 - Validate request input with [src/utils/middleware-utils/validate.ts](src/utils/middleware-utils/validate.ts) and module Zod schemas before business logic.
 - Throw API-facing errors using [src/utils/errors/api-error.ts](src/utils/errors/api-error.ts).
 - Let [src/middlewares/error-handler.ts](src/middlewares/error-handler.ts) format failures; do not duplicate response formatting in controllers.
 - For atomic multi-document writes, use [src/utils/helpers/mongodb-transaction.ts](src/utils/helpers/mongodb-transaction.ts).
+- Put module-specific Zod schemas in the matching `*.validators.ts` file and export the inferred DTO type alongside the schema.
+- Apply request validation in routes before controllers; use the existing auth route flow as the reference pattern.
 
 ## Auth and Data Safety Conventions
 - Auth flow lives under [src/modules/auth](src/modules/auth) and token logic under [src/services/token.service.ts](src/services/token.service.ts).
@@ -49,3 +56,4 @@ Primary project docs:
 - After edits, run at least npm run typecheck.
 - For route, middleware, or validation changes, run npm test.
 - If lint-related files are touched, run npm run lint.
+- This repo uses ESLint 9 flat config in [eslint.config.js](eslint.config.js); do not add `.eslintrc` files.

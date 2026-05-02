@@ -47,6 +47,8 @@ export class AuthService {
       throw new ApiError(401, "Invalid email or password");
     }
 
+    await this.userTokenService.revokeAllUserTokens(user._id.toString());
+
     const token = this.tokenService.generateTokenPair(user._id.toString());
     await this.userTokenService.createUserToken(token.refreshToken, user._id.toString());
 
@@ -71,6 +73,6 @@ export class AuthService {
 
     const token = this.tokenService.generateTokenPair(userId);
     await this.userTokenService.createUserToken(token.refreshToken, userId);
-    return { token };
+    return token;
   }
 }
